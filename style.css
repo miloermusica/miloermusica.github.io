@@ -1,21 +1,63 @@
+/* General */
+body {
+  font-family: 'Georgia', serif;
+  background-color: #2b2b2b; /* Fondo oscuro */
+  color: #d3cbb8; /* Texto en tono beige */
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+  color: #d3cbb8; /* Tono beige */
+  background-color: #1f1f1f; /* Fondo más oscuro */
+  margin: 0;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Tabla */
+table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background: #1f1f1f; /* Fondo oscuro para la tabla */
+  color: #d3cbb8; /* Texto en tono beige */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+th, td {
+  border: 1px solid #3e3e3e; /* Líneas más sutiles */
+  text-align: center;
+  padding: 10px;
+}
+
+th {
+  background-color: #3e3e3e; /* Encabezado más claro */
+  color: #d3cbb8;
+  font-weight: normal;
+}
+
+td {
+  background-color: #2b2b2b; /* Fondo de las celdas */
+}
+
+/* Botones de añadir y restar */
 button {
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-    margin: 0 2px;
-  }
-  
-  button:hover {
-    opacity: 0.9;
-  }
-  
-  button:nth-child(1) { /* Botón de sumar */
-    background-color: #28a745;
-    color: white;
-  }
-  
-  button:nth-child(2) { /* Botón de restar */
-    background-color: #dc3545;
-    color: white;
-  }
-  
+  padding: 5px 10px;
+  background-color: #28a745; /* Verde para el botón de añadir */
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:nth-child(2) { /* Botón de restar */
+  background-color: #dc3545; /* Rojo para el botón de restar */
+}
+
