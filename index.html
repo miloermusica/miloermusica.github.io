@@ -14,7 +14,7 @@
         <th>Nombre del Vino</th>
         <th>Tipo</th>
         <th>Stock</th>
-        <th>Acción</th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
@@ -22,13 +22,19 @@
         <td>Cabernet Sauvignon</td>
         <td>Tinto</td>
         <td id="stock-1">10</td>
-        <td><button onclick="sumarStock('stock-1')">+1</button></td>
+        <td>
+          <button onclick="sumarStock('stock-1')">+1</button>
+          <button onclick="restarStock('stock-1')">-1</button>
+        </td>
       </tr>
       <tr>
         <td>Chardonnay</td>
         <td>Blanco</td>
         <td id="stock-2">15</td>
-        <td><button onclick="sumarStock('stock-2')">+1</button></td>
+        <td>
+          <button onclick="sumarStock('stock-2')">+1</button>
+          <button onclick="restarStock('stock-2')">-1</button>
+        </td>
       </tr>
     </tbody>
   </table>
