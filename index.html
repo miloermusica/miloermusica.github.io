@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Stock - Enoteca</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Inventario de la Enoteca</h1>
+  <table id="inventario">
+    <thead>
+      <tr>
+        <th>Nombre del Vino</th>
+        <th>Tipo</th>
+        <th>Stock</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Cabernet Sauvignon</td>
+        <td>Tinto</td>
+        <td id="stock-1">10</td>
+        <td><button onclick="sumarStock('stock-1')">+1</button></td>
+      </tr>
+      <tr>
+        <td>Chardonnay</td>
+        <td>Blanco</td>
+        <td id="stock-2">15</td>
+        <td><button onclick="sumarStock('stock-2')">+1</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <script src="script.js"></script>
+</body>
+</html>
