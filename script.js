@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getDatabase, ref, get, set, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -49,8 +49,14 @@ function sumarStock(id, cantidad) {
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
       const nuevoStock = snapshot.val() + cantidad;
+      console.log('Sumando stock: ', nuevoStock);  // Añadir console log para depuración
+
+      // Actualizar stock en Firebase
       update(stockRef, { stock: nuevoStock }).then(() => {
+        console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
+      }).catch((error) => {
+        console.error('Error actualizando el stock: ', error);
       });
     }
   });
@@ -62,8 +68,14 @@ function restarStock(id, cantidad) {
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
       const nuevoStock = snapshot.val() - cantidad;
+      console.log('Restando stock: ', nuevoStock);  // Añadir console log para depuración
+
+      // Actualizar stock en Firebase
       update(stockRef, { stock: nuevoStock }).then(() => {
+        console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
+      }).catch((error) => {
+        console.error('Error actualizando el stock: ', error);
       });
     }
   });
