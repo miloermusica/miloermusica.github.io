@@ -4,13 +4,13 @@ import { getDatabase, ref, set, update, onValue } from "https://www.gstatic.com/
 
 // Configuración de Firebase (reemplaza con tus datos)
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_DOMINIO.firebaseapp.com",
-  databaseURL: "https://TU_PROYECTO.firebaseio.com",
-  projectId: "TU_PROYECTO",
-  storageBucket: "TU_PROYECTO.appspot.com",
-  messagingSenderId: "TU_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyBc0HLTT1llSGwh-85qucdPnJVIat9Dq14",
+  authDomain: "enoteca-d37c8.firebaseapp.com",
+  databaseURL: "https://enoteca-d37c8-default-rtdb.firebaseio.com",
+  projectId: "enoteca-d37c8",
+  storageBucket: "enoteca-d37c8.firebasestorage.app",
+  messagingSenderId: "255465370905",
+  appId: "1:255465370905:web:bd99e92bc02e3d9dac4188"
 };
 
 // Inicializar Firebase y la base de datos
