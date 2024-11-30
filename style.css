@@ -1,20 +1,19 @@
-/* General */
+/* Fondo general y estilo de texto */
 body {
+  background-color: #1e1e1e; /* Fondo oscuro */
+  color: #d3c7b7; /* Color claro para texto */
   font-family: 'Georgia', serif;
-  background-color: #2b2b2b; /* Fondo oscuro */
-  color: #d3cbb8; /* Texto en tono beige */
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
+/* Encabezado */
 h1 {
-  font-size: 2.5rem;
-  text-align: center;
-  color: #d3cbb8; /* Tono beige */
-  background-color: #1f1f1f; /* Fondo más oscuro */
-  margin: 0;
-  padding: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  color: #d3c7b7;
+  font-size: 2.5em;
+  margin-top: 20px;
+  text-transform: uppercase;
 }
 
 /* Tabla */
@@ -22,42 +21,62 @@ table {
   width: 80%;
   margin: 20px auto;
   border-collapse: collapse;
-  background: #1f1f1f; /* Fondo oscuro para la tabla */
-  color: #d3cbb8; /* Texto en tono beige */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  background-color: #292929; /* Fondo oscuro para la tabla */
+  border: 1px solid #d3c7b7; /* Borde claro */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Sombras para profundidad */
 }
 
 th, td {
-  border: 1px solid #3e3e3e; /* Líneas más sutiles */
+  padding: 15px;
+  border: 1px solid #d3c7b7; /* Bordes de las celdas */
   text-align: center;
-  padding: 10px;
 }
 
 th {
-  background-color: #3e3e3e; /* Encabezado más claro */
-  color: #d3cbb8;
-  font-weight: normal;
+  background-color: #6b4f2a; /* Fondo para encabezados */
+  color: white;
+  font-weight: bold;
 }
 
 td {
-  background-color: #2b2b2b; /* Fondo de las celdas */
+  background-color: #1e1e1e; /* Fondo oscuro para las celdas */
+  color: #d3c7b7;
 }
 
-/* Botones de añadir y restar */
+/* Botones */
 button {
-  padding: 5px 10px;
-  background-color: #28a745; /* Verde para el botón de añadir */
+  padding: 10px 15px;
+  margin: 5px;
+  background-color: #6b4f2a; /* Marrón oscuro */
   color: white;
   border: none;
+  border-radius: 5px;
+  font-size: 1em;
   cursor: pointer;
-  margin: 0 2px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  opacity: 0.9;
+  background-color: #876038; /* Marrón claro */
 }
 
-button:nth-child(2) { /* Botón de restar */
-  background-color: #dc3545; /* Rojo para el botón de restar */
+button:active {
+  background-color: #5a3c20; /* Marrón más oscuro */
 }
 
+/* Responsividad */
+@media screen and (max-width: 768px) {
+  table {
+    width: 95%;
+  }
+
+  th, td {
+    font-size: 0.9em;
+    padding: 10px;
+  }
+
+  button {
+    padding: 8px 10px;
+    font-size: 0.9em;
+  }
+}
