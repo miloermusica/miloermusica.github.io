@@ -12,63 +12,62 @@ const firebaseConfig = {
   appId: "1:255465370905:web:bd99e92bc02e3d9dac4188"
 };
 
-firebase.initializeApp(firebaseConfig);
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
-// Referencia a la base de datos de Firebase
-const dbRef = firebase.database().ref("productos");
-
-// Función para cargar el stock desde Firebase
+// Obtener los productos desde Firebase
 function cargarStock() {
-    dbRef.once("value", function(snapshot) {
-        const productos = snapshot.val();
-        const tabla = document.getElementById("tabla-stock");
+  const stockRef = ref(db, 'productos/');
+  get(stockRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const productos = snapshot.val();
+      const tableBody = document.querySelector('#stockTable tbody');
+      tableBody.innerHTML = ''; // Limpiar tabla antes de cargar
 
-        // Limpiar la tabla antes de actualizarla
-        tabla.innerHTML = "";
-
-        for (const key in productos) {
-            const producto = productos[key];
-            const fila = document.createElement("tr");
-
-            const nombre = document.createElement("td");
-            nombre.textContent = producto.nombre;
-
-            const stock = document.createElement("td");
-            stock.textContent = producto.stock;
-
-            // Crear botones para sumar y restar stock
-            const sumarButton = document.createElement("button");
-            sumarButton.textContent = "+";
-            sumarButton.addEventListener("click", () => actualizarStock(key, producto.stock + 1));
-
-            const restarButton = document.createElement("button");
-            restarButton.textContent = "-";
-            restarButton.addEventListener("click", () => actualizarStock(key, producto.stock - 1));
-
-            fila.appendChild(nombre);
-            fila.appendChild(stock);
-            fila.appendChild(sumarButton);
-            fila.appendChild(restarButton);
-
-            tabla.appendChild(fila);
-        }
-    });
+      // Cargar productos y stock
+      for (const id in productos) {
+        const producto = productos[id];
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${producto.nombre}</td>
+          <td id="stock-${id}">${producto.stock}</td>
+          <td>
+            <button onclick="sumarStock('${id}', 1)">+</button>
+            <button onclick="restarStock('${id}', 1)">-</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      }
+    }
+  });
 }
 
-// Función para actualizar el stock de un producto
-function actualizarStock(id, nuevoStock) {
-    const productoRef = dbRef.child(id);
-    productoRef.update({
-        stock: nuevoStock
-    }, (error) => {
-        if (error) {
-            console.log("Error al actualizar el stock:", error);
-        } else {
-            console.log("Stock actualizado correctamente.");
-            cargarStock(); // Recargar la tabla después de la actualización
-        }
-    });
+// Función para sumar stock
+function sumarStock(id, cantidad) {
+  const stockRef = ref(db, 'productos/' + id + '/stock');
+  get(stockRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const nuevoStock = snapshot.val() + cantidad;
+      update(stockRef, { stock: nuevoStock }).then(() => {
+        cargarStock(); // Recargar el stock después de actualizar
+      });
+    }
+  });
 }
 
-// Llamar a la función cargarStock cuando se cargue la página
-window.onload = cargarStock;
+// Función para restar stock
+function restarStock(id, cantidad) {
+  const stockRef = ref(db, 'productos/' + id + '/stock');
+  get(stockRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      const nuevoStock = snapshot.val() - cantidad;
+      update(stockRef, { stock: nuevoStock }).then(() => {
+        cargarStock(); // Recargar el stock después de actualizar
+      });
+    }
+  });
+}
+
+// Cargar el stock al cargar la página
+cargarStock();
