@@ -45,14 +45,22 @@ function cargarStock() {
 
 // Función para sumar stock
 window.sumarStock = function(id, cantidad) {
-  const stockRef = ref(db, 'productos/' + id + '/stock');
+  const stockRef = ref(db, 'productos/' + id + '/stock');  // Asegúrate de que el acceso sea a 'stock' directamente
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      const nuevoStock = snapshot.val() + cantidad;
+      let stockActual = snapshot.val();  // Accede al valor numérico de stock directamente
+
+      // Asegurarnos de que el stock es un número
+      if (isNaN(stockActual)) {
+        console.error('El stock no es un número válido:', stockActual);
+        return;
+      }
+
+      let nuevoStock = stockActual + cantidad;  // Sumar la cantidad al stock actual
       console.log('Sumando stock: ', nuevoStock);  // Añadir console log para depuración
 
       // Actualizar stock en Firebase
-      update(stockRef, { stock: nuevoStock }).then(() => {
+      update(stockRef, nuevoStock).then(() => {
         console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
       }).catch((error) => {
@@ -64,14 +72,29 @@ window.sumarStock = function(id, cantidad) {
 
 // Función para restar stock
 window.restarStock = function(id, cantidad) {
-  const stockRef = ref(db, 'productos/' + id + '/stock');
+  const stockRef = ref(db, 'productos/' + id + '/stock');  // Asegúrate de que el acceso sea a 'stock' directamente
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      const nuevoStock = snapshot.val() - cantidad;
+      let stockActual = snapshot.val();  // Accede al valor numérico de stock directamente
+
+      // Asegurarnos de que el stock es un número
+      if (isNaN(stockActual)) {
+        console.error('El stock no es un número válido:', stockActual);
+        return;
+      }
+
+      let nuevoStock = stockActual - cantidad;  // Restar la cantidad al stock actual
+
+      // Asegurarse de que el nuevo stock no sea negativo
+      if (nuevoStock < 0) {
+        console.error('El stock no puede ser negativo');
+        return;
+      }
+
       console.log('Restando stock: ', nuevoStock);  // Añadir console log para depuración
 
       // Actualizar stock en Firebase
-      update(stockRef, { stock: nuevoStock }).then(() => {
+      update(stockRef, nuevoStock).then(() => {
         console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
       }).catch((error) => {
