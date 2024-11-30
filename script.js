@@ -45,10 +45,10 @@ function cargarStock() {
 
 // Función para sumar stock
 window.sumarStock = function(id, cantidad) {
-  const stockRef = ref(db, 'productos/' + id + '/stock');  // Asegúrate de que el acceso sea a 'stock' directamente
+  const stockRef = ref(db, 'productos/' + id + '/stock');  // Acceder a la propiedad 'stock' directamente
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      let stockActual = snapshot.val();  // Accede al valor numérico de stock directamente
+      let stockActual = snapshot.val();  // Obtener el valor numérico de stock
 
       // Asegurarnos de que el stock es un número
       if (isNaN(stockActual)) {
@@ -60,7 +60,11 @@ window.sumarStock = function(id, cantidad) {
       console.log('Sumando stock: ', nuevoStock);  // Añadir console log para depuración
 
       // Actualizar stock en Firebase
-      update(stockRef, nuevoStock).then(() => {
+      // Ahora debemos enviar un objeto con la propiedad 'stock' para que Firebase lo acepte
+      const updates = {};
+      updates['productos/' + id + '/stock'] = nuevoStock;
+
+      update(ref(db), updates).then(() => {
         console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
       }).catch((error) => {
@@ -72,10 +76,10 @@ window.sumarStock = function(id, cantidad) {
 
 // Función para restar stock
 window.restarStock = function(id, cantidad) {
-  const stockRef = ref(db, 'productos/' + id + '/stock');  // Asegúrate de que el acceso sea a 'stock' directamente
+  const stockRef = ref(db, 'productos/' + id + '/stock');  // Acceder a la propiedad 'stock' directamente
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      let stockActual = snapshot.val();  // Accede al valor numérico de stock directamente
+      let stockActual = snapshot.val();  // Obtener el valor numérico de stock
 
       // Asegurarnos de que el stock es un número
       if (isNaN(stockActual)) {
@@ -94,7 +98,11 @@ window.restarStock = function(id, cantidad) {
       console.log('Restando stock: ', nuevoStock);  // Añadir console log para depuración
 
       // Actualizar stock en Firebase
-      update(stockRef, nuevoStock).then(() => {
+      // Ahora debemos enviar un objeto con la propiedad 'stock' para que Firebase lo acepte
+      const updates = {};
+      updates['productos/' + id + '/stock'] = nuevoStock;
+
+      update(ref(db), updates).then(() => {
         console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
       }).catch((error) => {
@@ -103,6 +111,7 @@ window.restarStock = function(id, cantidad) {
     }
   });
 }
+
 
 // Cargar el stock al cargar la página
 cargarStock();
