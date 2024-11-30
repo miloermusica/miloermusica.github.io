@@ -1,85 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bodega del Alma</title>
-  <style>
-    body {
-      background-color: #1e1e1e;
-      color: #d3c7b7;
-      font-family: 'Georgia', serif;
-      text-align: center;
-    }
-    table {
-      width: 80%;
-      margin: 20px auto;
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 10px;
-      border: 1px solid #d3c7b7;
-      text-align: center;
-    }
-    button {
-      padding: 5px 10px;
-      margin: 0 5px;
-      background-color: #6b4f2a;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #876038;
-    }
-  </style>
+  <title>Enoteca - Control de Stock</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Bodega del Alma</h1>
-  <table>
+  <h1>Control de Stock de Vinos</h1>
+  
+  <!-- Tabla de Productos (Vinos) -->
+  <table id="stockTable">
     <thead>
       <tr>
-        <th>Producto</th>
-        <th>Cantidad</th>
+        <th>Vino</th>
+        <th>Stock</th>
         <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Titiana Nature 2018</td>
-        <td id="producto-1">0</td>
-        <td>
-          <button onclick="sumarStock('producto-1', 1)">+</button>
-          <button onclick="restarStock('producto-1', 1)">-</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Titiana Rosé 2017</td>
-        <td id="producto-2">0</td>
-        <td>
-          <button onclick="sumarStock('producto-2', 2)">+</button>
-          <button onclick="restarStock('producto-2', 2)">-</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Vinyes de Can Sala 2015</td>
-        <td id="producto-3">0</td>
-        <td>
-          <button onclick="sumarStock('producto-3', 3)">+</button>
-          <button onclick="restarStock('producto-3', 3)">-</button>
-        </td>
-      </tr>
-      <tr>
-        <td>Can Sala 2013</td>
-        <td id="producto-4">0</td>
-        <td>
-          <button onclick="sumarStock('producto-4', 4)">+</button>
-          <button onclick="restarStock('producto-4', 4)">-</button>
-        </td>
-      </tr>
+      <!-- Los productos y el stock se cargarán aquí desde Firebase -->
     </tbody>
   </table>
+
+  <!-- Script de Firebase y lógica de JavaScript -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
