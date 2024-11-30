@@ -48,8 +48,7 @@ window.sumarStock = function(id, cantidad) {
   const stockRef = ref(db, 'productos/' + id + '/stock');
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      let nuevoStock = parseInt(snapshot.val(), 10);  // Asegurarnos de que el valor es un número
-      nuevoStock += cantidad;
+      const nuevoStock = snapshot.val() + cantidad;
       console.log('Sumando stock: ', nuevoStock);  // Añadir console log para depuración
 
       // Actualizar stock en Firebase
@@ -68,8 +67,7 @@ window.restarStock = function(id, cantidad) {
   const stockRef = ref(db, 'productos/' + id + '/stock');
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      let nuevoStock = parseInt(snapshot.val(), 10);  // Asegurarnos de que el valor es un número
-      nuevoStock -= cantidad;
+      const nuevoStock = snapshot.val() - cantidad;
       console.log('Restando stock: ', nuevoStock);  // Añadir console log para depuración
 
       // Actualizar stock en Firebase
