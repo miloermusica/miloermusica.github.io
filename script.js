@@ -44,7 +44,7 @@ function cargarStock() {
 }
 
 // Función para sumar stock
-function sumarStock(id, cantidad) {
+window.sumarStock = function(id, cantidad) {
   const stockRef = ref(db, 'productos/' + id + '/stock');
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
@@ -63,7 +63,7 @@ function sumarStock(id, cantidad) {
 }
 
 // Función para restar stock
-function restarStock(id, cantidad) {
+window.restarStock = function(id, cantidad) {
   const stockRef = ref(db, 'productos/' + id + '/stock');
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
