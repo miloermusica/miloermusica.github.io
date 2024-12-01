@@ -24,6 +24,7 @@ function cargarStock() {
       const productos = snapshot.val();
       const tableBody = document.querySelector('#stockTable tbody');
       tableBody.innerHTML = ''; // Limpiar tabla antes de cargar
+      let totalPrecio = 0;
 
       // Cargar productos y stock
       for (const id in productos) {
@@ -31,6 +32,8 @@ function cargarStock() {
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${producto.nombre}</td>
+          <td>${producto.tipo}</td>
+          <td>${producto.precio}</td>
           <td id="stock-${id}">${producto.stock}</td>
           <td>
             <button onclick="sumarStock('${id}', 1)">+</button>
@@ -38,6 +41,17 @@ function cargarStock() {
           </td>
         `;
         tableBody.appendChild(row);
+
+        // sumar el precio de cada vino al total
+
+        totalPrecio += parseFloat(producto.precio) * pruducto.stock; // Multiplicar precio por stock
+      }
+
+      // Mostrar el total en el lugar de la pagina
+
+      const totalPrecioElement = document.getElementById( 'totalPrecio');
+      if (totalPrecioElement) {
+        totalPrecioElement.innerText = `Total Precio: €${totalPrecio.toFixed(2)}`; // Mostrar el total con dos decimales
       }
     }
   });
