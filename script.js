@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+import { getDatabase, ref, get, set, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
 
 // Configuración de Firebase
 const firebaseConfig = {
@@ -24,17 +24,25 @@ function cargarStock() {
       const productos = snapshot.val();
       const tableBody = document.querySelector('#stockTable tbody');
       tableBody.innerHTML = ''; // Limpiar tabla antes de cargar
-      let totalPrecio = 0;
+      let totalPrecio = 0; // Variable para almacenar el precio total
 
       // Cargar productos y stock
       for (const id in productos) {
         const producto = productos[id];
+
+        // Validar que los datos existan antes de asignarlos
+        const nombre = producto.nombre || "Sin nombre";
+        const tipo = producto.tipo || "Sin tipo";
+        const precio = producto.precio || 0;
+        const stock = producto.stock || 0;
+
+        // Crear fila de la tabla
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${producto.nombre}</td>
-          <td>${producto.tipo}</td>
-          <td>${producto.precio}</td>
-          <td id="stock-${id}">${producto.stock}</td>
+          <td>${tipo}</td>
+          <td>${nombre}</td>
+          <td>€${precio}</td>
+          <td id="stock-${id}">${stock}</td>
           <td>
             <button onclick="sumarStock('${id}', 1)">+</button>
             <button onclick="restarStock('${id}', 1)">-</button>
@@ -42,85 +50,79 @@ function cargarStock() {
         `;
         tableBody.appendChild(row);
 
-        // sumar el precio de cada vino al total
-
-        totalPrecio += parseFloat(producto.precio) * pruducto.stock; // Multiplicar precio por stock
+        // Sumar el precio de cada vino al total
+        totalPrecio += parseFloat(precio) * stock; // Multiplicar precio por stock
       }
 
-      // Mostrar el total en el lugar de la pagina
-
-      const totalPrecioElement = document.getElementById( 'totalPrecio');
+      // Mostrar el total en un lugar de la página
+      const totalPrecioElement = document.getElementById('totalPrecio');
       if (totalPrecioElement) {
         totalPrecioElement.innerText = `Total Precio: €${totalPrecio.toFixed(2)}`; // Mostrar el total con dos decimales
       }
+    } else {
+      console.log("No se encontraron datos en la base de datos.");
     }
+  }).catch((error) => {
+    console.error("Error al cargar el stock:", error);
   });
 }
 
 // Función para sumar stock
-window.sumarStock = function(id, cantidad) {
-  const stockRef = ref(db, 'productos/' + id + '/stock');  // Ruta de stock
+window.sumarStock = function (id, cantidad) {
+  const stockRef = ref(db, `productos/${id}/stock`);
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      let stockActual = snapshot.val();  // Obtener el valor actual de stock
+      let stockActual = snapshot.val();
 
-      // Asegurarnos de que el stock es un número
       if (isNaN(stockActual)) {
         console.error('El stock no es un número válido:', stockActual);
         return;
       }
 
-      let nuevoStock = stockActual + cantidad;  // Sumar la cantidad al stock actual
-      console.log('Sumando stock: ', nuevoStock);  // Añadir console log para depuración
-
-      // Crear un objeto con la nueva estructura
-      const updates = {};
-      updates['productos/' + id + '/stock'] = nuevoStock;  // Asegurarse de que es un número válido
+      let nuevoStock = stockActual + cantidad;
 
       // Actualizar el stock en Firebase
+      const updates = {};
+      updates[`productos/${id}/stock`] = nuevoStock;
+
       update(ref(db), updates).then(() => {
         console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
       }).catch((error) => {
-        console.error('Error actualizando el stock: ', error);
+        console.error('Error actualizando el stock:', error);
       });
     }
   });
 }
 
 // Función para restar stock
-window.restarStock = function(id, cantidad) {
-  const stockRef = ref(db, 'productos/' + id + '/stock');  // Ruta de stock
+window.restarStock = function (id, cantidad) {
+  const stockRef = ref(db, `productos/${id}/stock`);
   get(stockRef).then((snapshot) => {
     if (snapshot.exists()) {
-      let stockActual = snapshot.val();  // Obtener el valor actual de stock
+      let stockActual = snapshot.val();
 
-      // Asegurarnos de que el stock es un número
       if (isNaN(stockActual)) {
         console.error('El stock no es un número válido:', stockActual);
         return;
       }
 
-      let nuevoStock = stockActual - cantidad;  // Restar la cantidad al stock actual
+      let nuevoStock = stockActual - cantidad;
 
-      // Asegurarse de que el nuevo stock no sea negativo
       if (nuevoStock < 0) {
         console.error('El stock no puede ser negativo');
         return;
       }
 
-      console.log('Restando stock: ', nuevoStock);  // Añadir console log para depuración
-
-      // Crear un objeto con la nueva estructura
-      const updates = {};
-      updates['productos/' + id + '/stock'] = nuevoStock;  // Asegurarse de que es un número válido
-
       // Actualizar el stock en Firebase
+      const updates = {};
+      updates[`productos/${id}/stock`] = nuevoStock;
+
       update(ref(db), updates).then(() => {
         console.log('Stock actualizado en Firebase');
         cargarStock(); // Recargar el stock después de actualizar
       }).catch((error) => {
-        console.error('Error actualizando el stock: ', error);
+        console.error('Error actualizando el stock:', error);
       });
     }
   });
